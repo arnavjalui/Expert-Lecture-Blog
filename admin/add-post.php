@@ -1,6 +1,8 @@
 <?php //include config
+//require_once('../includes/functions.php');
 require_once('../includes/config.php');
 
+ 
 //if not logged in redirect to login page
 if(!$user->is_logged_in()){ header('Location: login.php'); }
 ?>
@@ -55,19 +57,28 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		if($postCont ==''){
 			$error[] = 'Please enter the content.';
 		}
-
+		$postDate = date('Y-m-d H:i:s');
+		
 		if(!isset($error)){
-
+			
 			try {
-
+				
 				//insert into database
-				$stmt = $db->prepare('INSERT INTO blog_posts (postTitle,postDesc,postCont,postDate) VALUES (:postTitle, :postDesc, :postCont, :postDate)') ;
-				$stmt->execute(array(
-					':postTitle' => $postTitle,
-					':postDesc' => $postDesc,
-					':postCont' => $postCont,
-					':postDate' => date('Y-m-d H:i:s')
-				));
+				// $stmt = $db->prepare('INSERT INTO blog_posts (postTitle,postDesc,postCont,postDate) VALUES (:postTitle, :postDesc, :postCont, :postDate)') ;
+				// $stmt->execute(array(
+				// 	':postTitle' => $postTitle,
+				// 	':postDesc' => $postDesc,
+				// 	':postCont' => $postCont,
+				// 	':postDate' => date('Y-m-d H:i:s')
+				// ));
+
+				$sql = "INSERT INTO blog_posts (postTitle, postDesc,postCont,postDate)VALUES('$postTitle', '$postDesc', '$postCont', '$postDate')";
+				if(mysqli_query($conn, $sql)){
+    				echo "Records inserted successfully.";
+					} else{
+    					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+					}
+ 
 
 				//redirect to index page
 				header('Location: index.php?action=added');

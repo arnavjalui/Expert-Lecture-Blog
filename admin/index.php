@@ -1,6 +1,7 @@
 <?php
 //include config
 require_once('../includes/config.php');
+//require_once('../includes/functions.php');
 
 //if not logged in redirect to login page
 if(!$user->is_logged_in()){ header('Location: login.php'); }
@@ -8,8 +9,18 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 //show message from add / edit page
 if(isset($_GET['delpost'])){ 
 
-	$stmt = $db->prepare('DELETE FROM blog_posts WHERE postID = :postID') ;
-	$stmt->execute(array(':postID' => $_GET['delpost']));
+	// $stmt = $db->prepare('DELETE FROM blog_posts WHERE postID = :postID') ;
+	// $stmt->execute(array(':postID' => $_GET['delpost']));
+
+	$pid = $_GET['delpost'];
+	$sql = "DELETE FROM blog_posts WHERE postID = '$pid' ";
+	if(mysqli_query($conn, $sql)){
+    				echo "Records inserted successfully.";
+					} else{
+    					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+					}
+ 
+
 
 	header('Location: index.php?action=deleted');
 	exit;
@@ -55,12 +66,18 @@ if(isset($_GET['delpost'])){
 	<?php
 		try {
 
-			$stmt = $db->query('SELECT postID, postTitle, postDate FROM blog_posts ORDER BY postID DESC');
-			while($row = $stmt->fetch()){
+			//$stmt = $db->query('SELECT postID, postTitle, postDate FROM blog_posts ORDER BY postID DESC');
+
+
+			$sql1 = "SELECT postID, postTitle, postDate FROM blog_posts ORDER BY postID DESC";
+
+			$result = mysqli_query($conn, $sql1);
+			while($row = mysqli_fetch_array($result)){
 				
 				echo '<tr>';
 				echo '<td>'.$row['postTitle'].'</td>';
 				echo '<td>'.date('jS M Y', strtotime($row['postDate'])).'</td>';
+				
 				?>
 
 				<td>

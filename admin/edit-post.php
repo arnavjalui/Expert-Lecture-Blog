@@ -1,6 +1,6 @@
 <?php //include config
 require_once('../includes/config.php');
-
+//require_once('../includes/functions.php');
 //if not logged in redirect to login page
 if(!$user->is_logged_in()){ header('Location: login.php'); }
 ?>
@@ -66,13 +66,25 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 			try {
 
 				//insert into database
-				$stmt = $db->prepare('UPDATE blog_posts SET postTitle = :postTitle, postDesc = :postDesc, postCont = :postCont WHERE postID = :postID') ;
-				$stmt->execute(array(
-					':postTitle' => $postTitle,
-					':postDesc' => $postDesc,
-					':postCont' => $postCont,
-					':postID' => $postID
-				));
+				// $stmt = $db->prepare('UPDATE blog_posts SET postTitle = :postTitle, postDesc = :postDesc, postCont = :postCont WHERE postID = :postID') ;
+				// $stmt->execute(array(
+				// 	':postTitle' => $postTitle,
+				// 	':postDesc' => $postDesc,
+				// 	':postCont' => $postCont,
+				// 	':postID' => $postID
+				// ));
+
+
+
+				$sql = "UPDATE blog_posts SET postTitle = '$postTitle' , postDesc = '$postDesc', postCont = '$postCont' WHERE postID = '$postID' ";
+
+				if(mysqli_query($conn, $sql)){
+    				echo "Records inserted successfully.";
+					} else{
+    					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+					}
+ 
+
 
 				//redirect to index page
 				header('Location: index.php?action=updated');
