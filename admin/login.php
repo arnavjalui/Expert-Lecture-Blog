@@ -1,10 +1,12 @@
 <?php
 //include config
-require_once('../includes/config.php');
+require_once('includes/functions.php');
 
 
-//check if already logged in
-if( $user->is_logged_in() ){ header('Location: index.php'); } 
+if ((isset($_SESSION['user_id']))) {
+    header('Location: profile.php');
+}
+
 ?>
 <!doctype html>
 <html lang="en">

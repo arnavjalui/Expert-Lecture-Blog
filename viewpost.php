@@ -1,4 +1,8 @@
-<?php require('includes/config.php'); 
+<?php require('includes/functions.php'); 
+
+if (!(isset($_SESSION['user_id']))) {
+    header('Location: login.php');
+}
 
 $stmt = $db->prepare('SELECT postID, postTitle, postCont, postDate FROM blog_posts WHERE postID = :postID');
 $stmt->execute(array(':postID' => $_GET['id']));

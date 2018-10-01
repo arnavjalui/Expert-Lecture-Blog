@@ -1,4 +1,10 @@
-<?php require('includes/config.php'); ?>
+<?php require('includes/config.php'); 
+
+if (!(isset($_SESSION['user_id']))) {
+    header('Location: login.php');
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +16,7 @@
 <body>
 
 	<div id="wrapper">
-
-		<h1>Blog</h1>
-		<hr />
+		<?php include('menu.php');?>
 
 		<?php
 			try {
