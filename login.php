@@ -32,8 +32,7 @@ if ((isset($_SESSION['user_id']))) {
 </html>
 
 <script type="text/javascript">
-    function checkUsername(email)
-    {
+    function checkUsername(email){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
