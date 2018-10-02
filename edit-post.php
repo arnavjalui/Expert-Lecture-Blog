@@ -79,7 +79,7 @@ $pid = $_GET['id'];
 
 				
 				
-				$sql = " UPDATE blog_posts SET postTitle = '$postTitle' , postDesc = '$postDesc', postCont = '$postCont' WHERE postID = $postID ";
+				$sql = 'UPDATE blog_posts SET postTitle = "$postTitle" , postDesc = "$postDesc", postCont = "$postCont" WHERE postID = "$postID" ';
 
 				if(mysqli_query($conn, $sql)){
     				echo "Records inserted successfully.";

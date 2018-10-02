@@ -21,12 +21,45 @@ if ((isset($_SESSION['user_id']))) {
 <div id="login">
 
 	<form action="includes/functions.php" method="POST">
-	<p><label>Email</label><input type="text" name="Email" value="" required /></p>
-	<p><label>Password</label><input type="password" name="Password" value="" required="" /></p>
-	<p><label></label><input type="submit" name="login_submit" value="Login"  /></p>
-	</form>
+    	<p><label><pre>Email:    </label><input type='email' name='Email' id="email" value='' required oninput="checkUsername(this)"></p></pre>
+    	<p><label><pre>Password: </label><input type="password" name="Password" value="" required="" /></p></pre>
+    	<p><label></label><input type="submit" name="login_submit" value="Login"  /></p>
+    </form>
 
 </div>
 </div>
 </body>
 </html>
+
+<script type="text/javascript">
+    function checkUsername(email)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                //alert(this.responseText);
+                if(this.responseText=='')
+                {    
+                    var elem = document.getElementById("email");
+                    elem.setCustomValidity("Email not registered. Please register before logging in.");
+                    elem.reportValidity();
+
+                }
+                else
+                {
+                    var elem = document.getElementById("email");
+                    elem.setCustomValidity("");
+                }
+            };
+        }
+        xhttp.open("POST", "includes/functions.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("check_email="+email.value);
+    }
+
+    function clearValidation(email)
+    {
+        var elem = document.getElementById("email");
+        elem.setCustomValidity("");
+    }
+</script>
