@@ -1,16 +1,18 @@
 <?php require('includes/functions.php'); 
 
-if (!(isset($_SESSION['user_id']))) {
-    header('Location: login.php');
-}
+// if (!(isset($_SESSION['user_id']))) {
+//     header('Location: login.php');
+// }
 
-$stmt = $db->prepare('SELECT postID, postTitle, postCont, postDate FROM blog_posts WHERE postID = :postID');
-$stmt->execute(array(':postID' => $_GET['id']));
-$row = $stmt->fetch();
+
+$pID = $_GET['id'];
+$sql1 = "SELECT user_id, postID, postTitle, postDate, postCont FROM blog_posts WHERE postID = '$pID'";
+$result = mysqli_query($conn, $sql1);
+$row = mysqli_fetch_array($result);
 
 //if post does not exists redirect user.
 if($row['postID'] == ''){
-	header('Location: ./');
+	header('Location: index.php');
 	exit;
 }
 
@@ -26,19 +28,24 @@ if($row['postID'] == ''){
 <body>
 
 	<div id="wrapper">
-
-		<h1>Blog</h1>
-		<hr />
-		<p><a href="./">Blog Index</a></p>
-
-
-		<?php	
-			echo '<div>';
-				echo '<h1>'.$row['postTitle'].'</h1>';
-				echo '<p>Posted on '.date('jS M Y', strtotime($row['postDate'])).'</p>';
-				echo '<p>'.$row['postCont'].'</p>';				
-			echo '</div>';
-		?>
+		<?php
+		if (!(isset($_SESSION['user_id']))) {
+			include('menu2.php');
+		} else {
+			include('menu.php');
+		}
+		$post_uid = $row['user_id'];
+		$sql2 = "SELECT first_name, last_name FROM blog_members WHERE blog_members.user_id='$post_uid'";
+		$result2 = mysqli_query($conn, $sql2);
+		$row2 = mysqli_fetch_array($result2);
+		$name = $row2['first_name'].' '.$row2['last_name'];
+		
+		echo '<div>';
+		echo '<h1>'.$row['postTitle'].'</h1>';
+		echo '<p>Posted on '.date('jS M Y', strtotime($row['postDate'])).' by <strong>'.$name.'</strong></p>';
+		echo '<p>'.$row['postCont'].'</p>';				
+		echo '</div>';
+	?>
 
 	</div>
 

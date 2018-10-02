@@ -1,5 +1,9 @@
 <?php //include config
 require_once('includes/functions.php');
+if ((isset($_SESSION['user_id']))) {
+    header('Location: profile.php');
+}
+ required
 ?>
 <!doctype html>
 <html lang="en">
@@ -20,16 +24,16 @@ require_once('includes/functions.php');
 	<form action='includes/functions.php' method='POST'>
 
 		<p><label>First name</label><br />
-		<input type='text' name='first_name' value=''></p>
+		<input type='text' name='first_name' value='' required></p>
 
 		<p><label>Last name</label><br />
-		<input type='text' name='last_name' value=''></p>
+		<input type='text' name='last_name' value='' required></p>
 
 		<p><label>Password</label><br />
-		<input type='password' name='password' value=''></p>
+		<input type='password' name='password' value='' required></p>
 
 		<p><label>Email</label><br />
-		<input type='text' name='email' value=''></p>
+		<input type='text' name='email' value='' required></p>
 		
 		<p><input type='submit' name='register_submit' value='Register Now!'></p>
 

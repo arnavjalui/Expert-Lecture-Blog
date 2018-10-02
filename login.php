@@ -16,16 +16,17 @@ if ((isset($_SESSION['user_id']))) {
   <link rel="stylesheet" href="style/main.css">
 </head>
 <body>
-
+<div class="wrapper">
 <?php include('menu2.php');?>
 <div id="login">
 
 	<form action="includes/functions.php" method="POST">
-	<p><label>Email</label><input type="text" name="Email" value=""  /></p>
-	<p><label>Password</label><input type="password" name="Password" value=""  /></p>
+	<p><label>Email</label><input type="text" name="Email" value="" required /></p>
+	<p><label>Password</label><input type="password" name="Password" value="" required="" /></p>
 	<p><label></label><input type="submit" name="login_submit" value="Login"  /></p>
 	</form>
 
+</div>
 </div>
 </body>
 </html>

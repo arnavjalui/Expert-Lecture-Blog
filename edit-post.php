@@ -1,5 +1,8 @@
 <?php //include config
-require_once('../includes/config.php');
+require_once('includes/functions.php');
+if (!(isset($_SESSION['user_id']))) {
+    header('Location: login.php');
+}
 //require_once('../includes/functions.php');
 //if not logged in redirect to login page
 //if(!$user->is_logged_in()){ header('Location: login.php'); }
@@ -10,8 +13,8 @@ $pid = $_GET['id'];
 <head>
   <meta charset="utf-8">
   <title>Admin - Edit Post</title>
-  <link rel="stylesheet" href="../style/normalize.css">
-  <link rel="stylesheet" href="../style/main.css">
+  <link rel="stylesheet" href="style/normalize.css">
+  <link rel="stylesheet" href="style/main.css">
   <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
   <script>
           tinymce.init({
@@ -30,7 +33,6 @@ $pid = $_GET['id'];
 <div id="wrapper">
 
 	<?php include('menu.php');?>
-	<p><a href="./">Blog Admin Index</a></p>
 
 	<h2>Edit Post</h2>
 

@@ -1,10 +1,13 @@
 <?php
 //include config
-require_once('../includes/config.php');
+require_once('includes/functions.php');
+if (!(isset($_SESSION['user_id']))) {
+    header('Location: login.php');
+}
 //require_once('../includes/functions.php');
 
 //if not logged in redirect to login page
-if(!$user->is_logged_in()){ header('Location: login.php'); }
+//if(!$user->is_logged_in()){ header('Location: login.php'); }
 
 //show message from add / edit page
 if(isset($_GET['delpost'])){ 
@@ -32,8 +35,8 @@ if(isset($_GET['delpost'])){
 <head>
   <meta charset="utf-8">
   <title>Admin</title>
-  <link rel="stylesheet" href="../style/normalize.css">
-  <link rel="stylesheet" href="../style/main.css">
+  <link rel="stylesheet" href="style/normalize.css">
+  <link rel="stylesheet" href="style/main.css">
   <script language="JavaScript" type="text/javascript">
   function delpost(id, title)
   {
@@ -68,8 +71,8 @@ if(isset($_GET['delpost'])){
 
 			//$stmt = $db->query('SELECT postID, postTitle, postDate FROM blog_posts ORDER BY postID DESC');
 
-
-			$sql1 = "SELECT postID, postTitle, postDate FROM blog_posts ORDER BY postID DESC";
+			$uid = $_SESSION['user_id'];
+			$sql1 = "SELECT postID, postTitle, postDate FROM blog_posts WHERE user_id='$uid' ORDER BY postID DESC";
 
 			$result = mysqli_query($conn, $sql1);
 			while($row = mysqli_fetch_array($result)){
