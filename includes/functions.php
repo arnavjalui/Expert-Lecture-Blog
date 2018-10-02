@@ -16,6 +16,8 @@ if (isset($_POST['login_submit'])) {
 	userlogin($conn);
 } elseif (isset($_POST['register_submit'])) {
 	usersignup($conn);
+} elseif (isset($_POST['check_email'])) {
+	echo check_email($conn);
 }
 
 
@@ -93,3 +95,20 @@ function usersignup($conn) {
 		}
 	}
 }
+
+function check_email($conn)
+{
+	if (isset($_POST['check_email'])) {
+		$email=mysqli_real_escape_string($conn, $_POST['check_email']);
+		$sql="SELECT * FROM blog_members WHERE blog_members.email='$email'";
+		$result=mysqli_query($conn, $sql);
+		$num_row= mysqli_num_rows($result);
+		if ($num_row>0) 
+			$response = true;
+		else
+			$response = false;
+	return $response;
+	}
+}
+
+?>
